@@ -1,0 +1,33 @@
+{
+"name": "TikTok Saver",
+"version": "1.0",
+"developer": "ZT",
+"category": "Media",
+"package": "com.tiksaver.zainiapps",
+
+"publishDate": "2026-09-20",
+"lastUpdate": "2026-09-20",
+
+"verified": true,
+"updateAvailable": false,
+
+"icon": "icon.png",
+
+"screenshots": [
+"screenshot1.png",
+"screenshot2.png",
+"screenshot3.png",
+"screenshot4.png"
+],
+
+"download": "https://www.mediafire.com/file/yaxcfgl8tp4b7ki/TikTok_Saver_1.2.apk/file",
+
+"about": "TikTok Saver is a simple and fast media utility application. It provides an easy interface for working with supported TikTok content. More information about the application can be added here when needed.",
+
+"whatsNew": [
+"Initial release",
+"Improved application interface",
+"Performance improvements",
+"Minor bug fixes"
+]
+}   
