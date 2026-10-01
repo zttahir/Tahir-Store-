@@ -1,0 +1,29 @@
+[
+  {
+    "id": "tiktoksaver",
+    "name": "TikTok Saver",
+    "version": "1.0",
+    "developer": "Jani Apps",
+    "category": "Media",
+    "package": "com.tiksaver.zainiapps",
+    "publishDate": "2026-09-20",
+    "lastUpdate": "2026-09-20",
+    "verified": true,
+    "updateAvailable": false,
+    "icon": "media/tiktoksaver/icon.png",
+    "screenshots": [
+      "media/tiktoksaver/screenshot1.png",
+      "media/tiktoksaver/screenshot2.png",
+      "media/tiktoksaver/screenshot3.png",
+      "media/tiktoksaver/screenshot4.png"
+    ],
+    "download": "https://www.mediafire.com/file/yaxcfgl8tp4b7ki/TikTok_Saver_1.2.apk/file",
+    "about": "TikTok Saver is a simple and fast media utility application. It provides an easy interface for working with supported TikTok content. More information about the application can be added here when needed.",
+    "whatsNew": [
+      "Initial release",
+      "Improved application interface",
+      "Performance improvements",
+      "Minor bug fixes"
+    ]
+  }
+]
