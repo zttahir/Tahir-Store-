@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZT Saver Help</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{margin:0;height:100%;background:#0d0f14;color:#fff;font-family:Arial}
+.app{height:100%;display:flex;flex-direction:column;background:#0d0f14}
+#chat{flex:1;overflow:auto;padding:15px}
+.msg{display:flex;margin:9px 0}.msg div{max-width:88%;padding:11px 13px;border-radius:16px;line-height:1.5;font-size:14px}
+.bot div{background:#1b2029;border-top-left-radius:5px}
+.user{justify-content:flex-end}.user div{background:#00AEEF;border-top-right-radius:5px}
+.step{margin:7px 0;padding:8px 10px;background:#252b35;border-radius:10px}
+.tip{margin-top:9px;padding:8px;background:#062a39;border-radius:9px;color:#70dcff;font-size:12px}
+.welcome{text-align:center;padding:35px 15px;color:#999}
+.welcome b{font-size:22px;color:#fff}
+.quick{display:flex;gap:6px;overflow:auto;padding:6px 12px}
+.quick button{white-space:nowrap;background:#191e27;color:#ccc;border:1px solid #303640;border-radius:20px;padding:8px 11px}
+.input{padding:9px 10px 12px;background:#101319;border-top:1px solid #222}
+.box{display:flex;align-items:center;padding:5px 6px 5px 14px;border:1px solid #303640;border-radius:17px;background:#191e27}
+.box:focus-within{border-color:#00AEEF;box-shadow:0 0 0 3px #00aeef18}
+input{flex:1;min-width:0;height:40px;border:0;outline:0;background:none;color:#fff;font-size:14px;user-select:text;-webkit-user-select:text}
+button{outline:0;border:0}
+.del,.send{width:40px;height:40px;border-radius:13px;margin-left:5px}
+.del{background:#292f39;color:#aaa}.send{background:#00AEEF;color:#fff;font-size:18px}
+.footer{text-align:center;color:#555;font-size:9px;margin-top:5px}
+.typing span{display:inline-block;width:6px;height:6px;background:#999;border-radius:50%;margin:2px}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div id="chat">
+<div class="welcome" id="welcome">
+<div style="font-size:35px">🧠</div>
+<b>ZT Saver Help</b>
+<p>Ask me anything about ZT Saver.</p>
+</div>
+</div>
+
+<div class="quick">
+<button onclick="ask('Hello')">Hello 👋</button>
+<button onclick="ask('How are you?')">How are you?</button>
+<button onclick="ask('How to download video?')">Download</button>
+<button onclick="ask('Without watermark?')">No Watermark</button>
+<button onclick="ask('How to see downloads?')">Downloads</button>
+</div>
+
+<div class="input">
+<div class="box">
+<input id="inp" placeholder="Ask about ZT Saver...">
+<button class="del" onclick="clearChat()">🗑</button>
+<button class="send" onclick="send()">➤</button>
+</div>
+<div class="footer">ZT Saver Help Assistant</div>
+</div>
+
+</div>
+
+<script>
+
+const KEY="zt_help_chat";
+const email="zthelpcentere@gmail.com";
+const chat=document.getElementById("chat");
+const inp=document.getElementById("inp");
+
+const data=[
+
+{
+k:["hello","hi","hey","helo","hii","salam","aoa","assalamualaikum"],
+r:`<b>Hello bro 👋😄</b><br><br>
+ZT Saver Help Assistant yahan hai.<br>
+Aap downloading, watermark, audio ya app usage ke bare mein pooch sakte ho 😄`
+},
+
+{
+k:["how are you","how r u","how ru","kese ho","kaise ho","kesy ho","kasy ho","kia haal hai","kya haal hai","kya hal hai","kia hal hai","ap kese ho","aap kaise ho","sab theek hai"],
+r:`<b>Alhamdulillah bro 😄</b><br>
+Main bilkul ready hoon aapki help ke liye!<br><br>
+Aap sunao, sab theek? 😄`
+},
+
+{
+k:["thanks","thank you","thankyou","shukriya","thanks bro","thank u"],
+r:`<b>You're welcome bro 😄</b><br><br>
+Jab bhi ZT Saver ke bare mein help chahiye ho, pooch lena.`
+},
+
+{
+k:["bye","goodbye","allah hafiz","khuda hafiz"],
+r:`Allah Hafiz bro 👋😄<br><br>
+Jab bhi help chahiye ho, wapas aa jana.`
+},
+
+{
+k:["download video","videos download","video download","video kese download","video kaise download","video kaisy download","how to download","how can i download","how to use this app","app kaise use","app kese use","tiktok saver use"],
+r:`<b>Bilkul bro 😄 Video download karne ka method:</b>
+<div class="step">1️⃣ TikTok video ka link copy karke input box mein paste karein.</div>
+<div class="step">2️⃣ Without Watermark chahiye to <b>Without Watermark</b> check karein.</div>
+<div class="step">3️⃣ Sirf audio chahiye to <b>Audio Only</b> check karein, warna unchecked rakhein.</div>
+<div class="step">4️⃣ <b>Play</b> button press karein.</div>
+<div class="step">5️⃣ Video aur profile information load hone dein.</div>
+<div class="step">6️⃣ Ab <b>Download Video</b> button press karein.</div>
+<div class="tip">Bas bro 😄 downloading start ho jayegi.</div>`
+},
+
+{
+k:["without watermark","no watermark","watermark remove","bina watermark","watermark ke bina","watermark nahi chahiye","watermark ke baghair"],
+r:`<b>Without Watermark download karna hai? 😄</b>
+<div class="step">1️⃣ Video link paste karein.</div>
+<div class="step">2️⃣ <b>Without Watermark</b> checkbox check karein.</div>
+<div class="step">3️⃣ Video chahiye to Audio Only unchecked rakhein.</div>
+<div class="step">4️⃣ Play press karein.</div>
+<div class="step">5️⃣ Information load hone ke baad Download Video press karein.</div>`
+},
+
+{
+k:["audio","audio only","only audio","audio download","sound download","music download","sirf audio","audio kese download","audio kaise download"],
+r:`<b>Sirf audio download karni hai? 🎵</b>
+<div class="step">1️⃣ TikTok link paste karein.</div>
+<div class="step">2️⃣ <b>Audio Only</b> check karein.</div>
+<div class="step">3️⃣ Play button press karein.</div>
+<div class="step">4️⃣ Information load hone ke baad download button press karein.</div>`
+},
+
+{
+k:["downloaded videos","download ki gai videos","download ki hui video","download videos kaha","downloaded video kaha","downloads kaha","download section","saved videos kaha","downloaded video kaise dekhu","how can i see downloaded videos","where are my downloaded videos","how to view downloaded videos"],
+r:`<b>Downloaded videos dekhna easy hai bro 😄</b>
+<div class="step">1️⃣ Jahan se aap video download karte hain wahan jayein.</div>
+<div class="step">2️⃣ Top-right side par <b>Download icon</b> press karein.</div>
+<div class="step">3️⃣ Aapki downloaded videos show ho jayengi.</div>
+<div class="step">4️⃣ Video par click karke usay dekh sakte hain.</div>
+<div class="step">5️⃣ <b>3 dots</b> se Rename, Delete, Share aur Video Info jaise options check kar sakte hain.</div>`
+},
+
+{
+k:["3 dots","three dots","video options","rename video","delete video","share video","video info","3 dot menu"],
+r:`<b>3-dot menu 😄</b><br><br>
+Downloaded video ke 3 dots press karein.<br><br>
+Available options mein <b>Rename, Delete, Share</b> aur <b>Video Info</b> check kar sakte hain.
+<div class="tip">Options app version ke hisaab se change ho sakte hain.</div>`
+},
+
+{
+k:["link kaha","link paste","url kaha","where to paste link","tiktok link","link kaise dalu","link kese dalu"],
+r:`<b>Link paste karne ka method:</b><br><br>
+TikTok → Share → Copy Link → ZT Saver → Input box mein link paste karein → Play press karein. 😄`
+},
+
+{
+k:["play button","play kab","play kaise","link dalne ke baad","paste link then what","next step"],
+r:`Link paste karne ke baad <b>Play</b> button press karein 😄<br><br>
+Phir video/profile information load hone dein. Uske baad Download Video button press karein.`
+},
+
+{
+k:["download nahi","download nahi ho rahi","download error","download failed","download problem","download start nahi","video save nahi"],
+r:`<b>Download problem aa rahi hai? 😅</b>
+<div class="step">1️⃣ Internet check karein.</div>
+<div class="step">2️⃣ Valid TikTok link use karein.</div>
+<div class="step">3️⃣ Play press karke information load hone dein.</div>
+<div class="step">4️⃣ Phir Download Video press karein.</div>`
+}
+
+];
+
+
+function norm(s){
+
+return s.toLowerCase()
+.replace(/kese|kesy|kasy|kaisy/g,"kaise")
+.replace(/kro|kr/g,"karo")
+.replace(/kia/g,"kya")
+.replace(/ap/g,"aap")
+.replace(/vidio|vedio/g,"video")
+.replace(/dowload|downlod|dwonload/g,"download")
+.replace(/nhi|nai/g,"nahi")
+.replace(/[^\w\s]/g," ")
+.replace(/\s+/g," ")
+.trim();
+
+}
+
+
+function lev(a,b){
+
+let x=[...Array(b.length+1)].map((_,i)=>[i]);
+
+for(let j=0;j<=a.length;j++)
+x[0][j]=j;
+
+for(let i=1;i<=b.length;i++)
+for(let j=1;j<=a.length;j++)
+x[i][j]=b[i-1]==a[j-1]
+?x[i-1][j-1]
+:Math.min(
+x[i-1][j]+1,
+x[i][j-1]+1,
+x[i-1][j-1]+1
+);
+
+return x[b.length][a.length];
+
+}
+
+
+function sim(a,b){
+
+a=norm(a).split(" ");
+b=norm(b).split(" ");
+
+let hit=0;
+
+a.forEach(x=>{
+
+if(x.length<2)return;
+
+b.forEach(y=>{
+
+if(x==y)hit++;
+
+else if(x.length>3&&y.length>3){
+
+let d=lev(x,y);
+
+if(d<=1||d/Math.max(x.length,y.length)<.3)
+hit+=.7;
+
+}
+
+});
+
+});
+
+return hit/Math.max(a.length,1);
+
+}
+
+
+function answer(q){
+
+let best=null,score=0;
+
+data.forEach(x=>x.k.forEach(k=>{
+
+let s=sim(q,k);
+
+if(s>score){
+score=s;
+best=x;
+}
+
+}));
+
+return score>=.35
+?best.r
+:`Sorry bro 😅 mujhe is bare mein information nahi hai.<br><br>
+Agar koi aur malomat chahiye to Developer se contact karein:<br><br>
+<b>${email}</b>`;
+
+}
+
+
+function add(t,type,save=true){
+
+let r=document.createElement("div");
+
+r.className="msg "+type;
+
+let d=document.createElement("div");
+
+d.innerHTML=t;
+
+r.appendChild(d);
+
+chat.appendChild(r);
+
+chat.scrollTop=chat.scrollHeight;
+
+if(save){
+
+let a=JSON.parse(
+localStorage.getItem(KEY)||"[]"
+);
+
+a.push({t,type});
+
+localStorage.setItem(
+KEY,
+JSON.stringify(a.slice(-300))
+);
+
+}
+
+}
+
+
+function load(){
+
+let a=JSON.parse(
+localStorage.getItem(KEY)||"[]"
+);
+
+if(!a.length)return;
+
+document.getElementById("welcome")?.remove();
+
+a.forEach(x=>
+add(x.t,x.type,false)
+);
+
+}
+
+
+function send(){
+
+let q=inp.value.trim();
+
+if(!q)return;
+
+document.getElementById("welcome")?.remove();
+
+add(escape(q),"user");
+
+inp.value="";
+
+let t=document.createElement("div");
+
+t.className="msg bot";
+t.id="typing";
+
+t.innerHTML=
+"<div class='typing'><span></span><span></span><span></span></div>";
+
+chat.appendChild(t);
+
+chat.scrollTop=chat.scrollHeight;
+
+setTimeout(()=>{
+
+document.getElementById("typing")?.remove();
+
+add(answer(q),"bot");
+
+inp.focus();
+
+},500);
+
+}
+
+
+function ask(q){
+
+inp.value=q;
+send();
+
+}
+
+
+function escape(s){
+
+let d=document.createElement("div");
+
+d.textContent=s;
+
+return d.innerHTML;
+
+}
+
+
+function clearChat(){
+
+if(confirm("Delete all chat history?")){
+
+localStorage.removeItem(KEY);
+
+location.reload();
+
+}
+
+}
+
+
+inp.addEventListener("keydown",e=>{
+
+if(e.key=="Enter"){
+
+e.preventDefault();
+send();
+
+}
+
+});
+
+
+document.addEventListener("contextmenu",e=>{
+
+if(e.target!=inp)
+e.preventDefault();
+
+});
+
+
+document.addEventListener("selectstart",e=>{
+
+if(e.target!=inp)
+e.preventDefault();
+
+});
+
+
+load();
+
+setTimeout(()=>{
+inp.focus();
+},200);
+
+</script>
+
+</body>
+</html>
